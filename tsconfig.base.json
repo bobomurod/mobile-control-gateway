@@ -1,0 +1,48 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@mobile-control-gateway/backend/users/common/interfaces": [
+        "libs/backend/users/common/interfaces/src/index.ts"
+      ],
+      "@mobile-control-gateway/backend/users/common/enums": [
+        "libs/backend/users/common/enums/src/index.ts"
+      ],
+      "@mobile-control-gateway/backend/users/backend/interfaces": [
+        "libs/backend/users/backend/interfaces/src/index.ts"
+      ],
+      "@mobile-control-gateway/backend/users/backend/enums": [
+        "libs/backend/users/backend/enums/src/index.ts"
+      ],
+      "@mobile-control-gateway/backend/users/backend/class-transfer-objects": [
+        "libs/backend/users/backend/class-transfer-objects/src/index.ts"
+      ],
+      "@mobile-control-gateway/backend/users/backend/schemas": [
+        "libs/backend/users/backend/schemas/src/index.ts"
+      ],
+      "@mobile-control-gateway/backend/users/backend/decorators": [
+        "libs/backend/users/backend/decorators/src/index.ts"
+      ],
+      "@mobile-control-gateway/backend/users/backend/interceptors": [
+        "libs/backend/users/backend/interceptors/src/index.ts"
+      ],
+      "@mobile-control-gateway/backend/authentication/services": [
+        "libs/backend/authentication/services/src/index.ts"
+      ]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

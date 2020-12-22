@@ -1,0 +1,293 @@
+{
+  "version": 2,
+  "projects": {
+    "backend": {
+      "root": "apps/backend",
+      "sourceRoot": "apps/backend/src",
+      "projectType": "application",
+      "prefix": "backend",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/backend",
+            "main": "apps/backend/src/main.ts",
+            "tsConfig": "apps/backend/tsconfig.app.json",
+            "assets": [
+              "apps/backend/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/backend/src/environments/environment.ts",
+                  "with": "apps/backend/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "backend:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/backend/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/backend"
+          ],
+          "options": {
+            "jestConfig": "apps/backend/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "backend-users-common-interfaces": {
+      "root": "libs/backend/users/common/interfaces",
+      "sourceRoot": "libs/backend/users/common/interfaces/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/backend/users/common/interfaces/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/backend/users/common/interfaces"
+          ],
+          "options": {
+            "jestConfig": "libs/backend/users/common/interfaces/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "backend-users-common-enums": {
+      "root": "libs/backend/users/common/enums",
+      "sourceRoot": "libs/backend/users/common/enums/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/backend/users/common/enums/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/backend/users/common/enums"
+          ],
+          "options": {
+            "jestConfig": "libs/backend/users/common/enums/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "backend-users-backend-interfaces": {
+      "root": "libs/backend/users/backend/interfaces",
+      "sourceRoot": "libs/backend/users/backend/interfaces/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/backend/users/backend/interfaces/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/backend/users/backend/interfaces"
+          ],
+          "options": {
+            "jestConfig": "libs/backend/users/backend/interfaces/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "backend-users-backend-enums": {
+      "root": "libs/backend/users/backend/enums",
+      "sourceRoot": "libs/backend/users/backend/enums/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/backend/users/backend/enums/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/backend/users/backend/enums"
+          ],
+          "options": {
+            "jestConfig": "libs/backend/users/backend/enums/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "backend-users-backend-class-transfer-objects": {
+      "root": "libs/backend/users/backend/class-transfer-objects",
+      "sourceRoot": "libs/backend/users/backend/class-transfer-objects/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/backend/users/backend/class-transfer-objects/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/backend/users/backend/class-transfer-objects"
+          ],
+          "options": {
+            "jestConfig": "libs/backend/users/backend/class-transfer-objects/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "backend-users-backend-schemas": {
+      "root": "libs/backend/users/backend/schemas",
+      "sourceRoot": "libs/backend/users/backend/schemas/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/backend/users/backend/schemas/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/backend/users/backend/schemas"
+          ],
+          "options": {
+            "jestConfig": "libs/backend/users/backend/schemas/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "backend-users-backend-decorators": {
+      "root": "libs/backend/users/backend/decorators",
+      "sourceRoot": "libs/backend/users/backend/decorators/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/backend/users/backend/decorators/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/backend/users/backend/decorators"
+          ],
+          "options": {
+            "jestConfig": "libs/backend/users/backend/decorators/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "backend-users-backend-interceptors": {
+      "root": "libs/backend/users/backend/interceptors",
+      "sourceRoot": "libs/backend/users/backend/interceptors/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/backend/users/backend/interceptors/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/backend/users/backend/interceptors"
+          ],
+          "options": {
+            "jestConfig": "libs/backend/users/backend/interceptors/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "backend-authentication-services": {
+      "root": "libs/backend/authentication/services",
+      "sourceRoot": "libs/backend/authentication/services/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/backend/authentication/services/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/backend/authentication/services"
+          ],
+          "options": {
+            "jestConfig": "libs/backend/authentication/services/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/nest"
+  },
+  "defaultProject": "backend"
+}
