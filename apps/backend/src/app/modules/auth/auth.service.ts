@@ -67,7 +67,7 @@ export class AuthService {
   }
 
   async registration(data: UserAuthRegistrationDto): Promise<UserAuthJwtResponseDto> {
-    data.password = await this._authenticationSecurityService.encrypt(data.password);
+    data.password = await this._authenticationSecurityService.encryptPassword(data.password);
     return await this._userService
       .createSingle(data)
       .then((user) => {
@@ -75,14 +75,15 @@ export class AuthService {
           userId: user._id,
           accessLevel: user.accessLevel
         };
+        // return this._authenticationSecurityService.generateJwtResponse(payload)
         return {
           ...payload,
           ...{ accessToken: this._jwtService.sign(payload) },
         };
       })
-      .catch(() => {
+      .catch((error) => {
         throw new UnauthorizedException(
-          'Unable to registration, please try later again or check data ',
+          'Unable to registration, please try later again or check data '+error,
         );
       });
   }
@@ -94,25 +95,25 @@ export class AuthService {
    * @return UserAuthJwtResponse
    * @private
    */
-  private async _generateJwtResponse(
-    payload: UserdebiaJwtPayloadDto,
-  ): Promise<UserJwtResponseDto> {
-    return {
-      accessToken: await this._jwtService.signAsync(
-        { ...payload, ...{ tokenType: 'accessToken' } },
-        { expiresIn: this._accessTokenTTL },
-      ),
-      refreshToken: await this._jwtService.signAsync(
-        { ...payload, ...{ tokenType: 'refreshToken' } },
-        { expiresIn: this._refreshTokenTTL },
-      ),
-      user: {
-        _id: payload._id,
-        email: payload.email,
-        accessLevel: payload.accessLevel,
-      },
-    };
-  }
+  // private async _generateJwtResponse(
+  //   payload: UserJwtPayloadDto,
+  // ): Promise<UserJwtResponseDto> {
+  //   return {
+  //     accessToken: await this._jwtService.signAsync(
+  //       { ...payload, ...{ tokenType: 'accessToken' } },
+  //       { expiresIn: this._accessTokenTTL },
+  //     ),
+  //     refreshToken: await this._jwtService.signAsync(
+  //       { ...payload, ...{ tokenType: 'refreshToken' } },
+  //       { expiresIn: this._refreshTokenTTL },
+  //     ),
+  //     user: {
+  //       _id: payload._id,
+  //       email: payload.email,
+  //       accessLevel: payload.accessLevel,
+  //     },
+  //   };
+  // }
 
   async validateUser(login: string, pass: string): Promise<any> {
     // const user = await this._userService.findOne(login);

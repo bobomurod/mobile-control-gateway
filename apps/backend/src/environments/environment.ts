@@ -4,7 +4,7 @@ export const environment = {
   databaseConfig: {
     USER: process.env.DATABASE_USER || 'nest',
     PASSWORD: process.env.DATABASE_PASSWORD || 'nest',
-    HOST: process.env.DATABASE_HOST || 'localhost',
+    HOST: process.env.DATABASE_HOST || 'bclaster0.z7cx1.mongodb.net',
     PORT: process.env.DATABASE_PORT || '27017',
     NAME: process.env.DATABASE_NAME || 'users',
     OPTION: process.env.DATABASE_OPTION || 'retryWrites=true&w=majority'
