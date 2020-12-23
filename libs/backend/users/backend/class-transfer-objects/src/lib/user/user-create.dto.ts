@@ -10,7 +10,7 @@ import {
 } from "class-validator";
 
 export class UserCreateDto {
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   _operatorId?: string;
 

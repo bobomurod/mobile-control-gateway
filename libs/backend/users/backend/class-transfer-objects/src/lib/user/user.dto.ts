@@ -18,7 +18,7 @@ export class UserDto {
   @IsString()
   _id: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   _operatorId: string;
 

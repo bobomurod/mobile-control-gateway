@@ -23,7 +23,7 @@ export class UserService {
       .save()
       .then((user) => user.toObject())
       .catch((error) => {
-        throw new InternalServerErrorException();
+        throw new InternalServerErrorException(error);
       });
   }
   async updateSingle(userId: string, data: UserUpdateDto): Promise<UserDto> {

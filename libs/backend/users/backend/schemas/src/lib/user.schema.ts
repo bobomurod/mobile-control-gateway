@@ -13,7 +13,7 @@ export class UserCollection extends Document {
 
   @Prop({
     type: String,
-    required: true,
+    required: false,
     index: true
   })
   _operatorId: string;
