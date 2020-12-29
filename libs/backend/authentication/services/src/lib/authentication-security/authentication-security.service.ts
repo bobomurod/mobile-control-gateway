@@ -7,7 +7,6 @@ import {
 } from "@mobile-control-gateway/backend/users/backend/class-transfer-objects";
 import {JwtService} from "@nestjs/jwt";
 import {ConfigService} from "@nestjs/config";
-import {loadAdapter} from "@nestjs/core/helpers/load-adapter";
 
 @Injectable()
 export class AuthenticationSecurityService {

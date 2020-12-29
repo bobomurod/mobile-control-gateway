@@ -7,7 +7,6 @@ import {
   UserUpdateDto, UserWhereDto
 } from "@mobile-control-gateway/backend/users/backend/class-transfer-objects";
 import {UserCollection} from "@mobile-control-gateway/backend/users/backend/schemas";
-import * as bcrypt from 'bcryptjs'
 
 @Injectable()
 export class UserService {
