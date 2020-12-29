@@ -33,13 +33,13 @@ export class AuthService {
   }
 
   async login(data: UserAuthLoginDto): Promise<UserAuthJwtResponseDto> {
-    const _userWhere = data;
-    delete _userWhere.password;
+    const {password,..._userWhere} = data;
+    this._logger.log(_userWhere)
     const _user: UserDto = await this._userService
       .getSingle(_userWhere)
       .then((user) => user)
-      .catch(() => {
-        throw new UnauthorizedException('Invalid username or password');
+      .catch((errr) => {
+        throw new UnauthorizedException('Invalid username or password'+errr);
       });
     return this._authenticationSecurityService
       .checkPassword(data.password, _user.password)
@@ -51,10 +51,12 @@ export class AuthService {
           userId: _user._id,
           accessLevel: _user.accessLevel,
         };
-        return {
+        const res =  {
           ...payload,
-          ...{ userId: _user._id,accessToken: this._jwtService.sign(payload), accessLevel: _user.accessLevel },
+          ...{ userId: _user._id, accessToken: this._jwtService.sign(payload), accessLevel: _user.accessLevel },
         };
+        this._logger.log(res)
+        return res
       })
       .catch((error) => {
         if (error instanceof UnauthorizedException) {
@@ -62,7 +64,7 @@ export class AuthService {
           throw new UnauthorizedException('Invalid username or password');
         }
         this._logger.error(error);
-        throw new InternalServerErrorException();
+        throw new InternalServerErrorException('123123');
       });
   }
 

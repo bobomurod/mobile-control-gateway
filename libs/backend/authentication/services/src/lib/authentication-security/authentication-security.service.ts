@@ -1,14 +1,17 @@
-import {Injectable} from '@nestjs/common';
-import * as bcryptjs from 'bcryptjs';
+// use 'strict';
+import {Injectable, Logger} from '@nestjs/common';
+import * as bcryptjs from 'bcrypt';
 import {
   UserAuthJwtPayloadDto,
   UserAuthJwtResponseDto
 } from "@mobile-control-gateway/backend/users/backend/class-transfer-objects";
 import {JwtService} from "@nestjs/jwt";
 import {ConfigService} from "@nestjs/config";
+import {loadAdapter} from "@nestjs/core/helpers/load-adapter";
 
 @Injectable()
 export class AuthenticationSecurityService {
+  private readonly _logger: Logger = new Logger('auth security service')
   private readonly _accessTokenTTL: number;
   private readonly _refreshTokenTTL: number;
 
@@ -20,13 +23,45 @@ export class AuthenticationSecurityService {
   async encryptPassword(rawPassword: string): Promise<string> {
     return await bcryptjs.hash(rawPassword, 10);
   }
+  // async encryptPassword(rawPassword: string): Promise<string> {
+  //   return rawPassword;
+  // }
+
+
+  // async checkPassword(
+  //   rawPassword: string,
+  //   encryptedPassword: string,
+  // ): Promise<boolean> {
+  //   console.log(rawPassword)
+  //   console.log(encryptedPassword)
+  //   return rawPassword === encryptedPassword;
+  //   // if (rawPassword === encryptedPassword){
+  //   //   return true
+  //   // } else {
+  //   //   return false
+  //   // }
+  // }
 
   async checkPassword(
     rawPassword: string,
     encryptedPassword: string,
   ): Promise<boolean> {
-    return await bcryptjs.compare(rawPassword, encryptedPassword);
+    const result = await bcryptjs.compare(rawPassword, encryptedPassword)
+    this._logger.log(result)
+    return result
   }
+
+  // async checkPassword(rawPassword,encryptedPassword): Promise<boolean> {
+  //   return new Promise(function (resolve, reject) {
+  //     bcryptjs.compare(rawPassword,encryptedPassword, function (err, res) {
+  //       if (err) {
+  //         reject(err)
+  //       } else {
+  //         resolve(res)
+  //       }
+  //     })
+  //   })
+  // }
 
   async generateJwtResponse(payload: UserAuthJwtPayloadDto): Promise<UserAuthJwtResponseDto> {
     return {

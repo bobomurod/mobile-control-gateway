@@ -1,4 +1,4 @@
-import {Injectable, InternalServerErrorException, NotFoundException,} from '@nestjs/common';
+import {Injectable, InternalServerErrorException, Logger, NotFoundException,} from '@nestjs/common';
 import {Model} from 'mongoose';
 import {InjectModel} from '@nestjs/mongoose';
 import {
@@ -11,13 +11,14 @@ import * as bcrypt from 'bcryptjs'
 
 @Injectable()
 export class UserService {
+  private readonly _logger: Logger = new Logger('userService')
   constructor(
     @InjectModel(UserCollection.name)
     private readonly _userModel: Model<UserCollection>,
   ) {}
 
   async createSingle(data: UserCreateDto): Promise<UserDto> {
-    data.password = await bcrypt.hash(data.password, 10);
+    this._logger.log(data)
     const _insertObject = new this._userModel(data);
     return await _insertObject
       .save()
@@ -50,6 +51,7 @@ export class UserService {
       });
   }
   async getSingle(where: UserWhereDto): Promise<UserDto> {
+    this._logger.log(where)
     return await this._userModel
       .findOne(where)
       .exec()
