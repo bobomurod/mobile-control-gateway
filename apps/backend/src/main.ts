@@ -12,4 +12,5 @@ async function bootstrap() {
   });
 }
 
+console.log(environment.databaseConfig)
 bootstrap();

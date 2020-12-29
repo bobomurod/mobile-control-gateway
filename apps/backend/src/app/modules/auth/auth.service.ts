@@ -33,8 +33,8 @@ export class AuthService {
   }
 
   async login(data: UserAuthLoginDto): Promise<UserAuthJwtResponseDto> {
-    const _userWhere = data;
-    delete _userWhere.password;
+    const {password,..._userWhere} = data;
+    this._logger.log(_userWhere)
     const _user: UserDto = await this._userService
       .getSingle(_userWhere)
       .then((user) => user)
@@ -50,11 +50,17 @@ export class AuthService {
         const payload: UserAuthJwtPayloadDto = {
           userId: _user._id,
           accessLevel: _user.accessLevel,
+          refreshToken: this._jwtService.sign({
+            userId: _user._id,
+            accessLevel: _user.accessLevel,
+          })
         };
-        return {
+        const res =  {
           ...payload,
-          ...{ userId: _user._id,accessToken: this._jwtService.sign(payload), accessLevel: _user.accessLevel },
+          ...{ userId: _user._id, accessToken: this._jwtService.sign(payload), accessLevel: _user.accessLevel },
         };
+        this._logger.log(res)
+        return res
       })
       .catch((error) => {
         if (error instanceof UnauthorizedException) {
@@ -73,13 +79,17 @@ export class AuthService {
       .then((user) => {
         const payload: UserAuthJwtPayloadDto = {
           userId: user._id,
-          accessLevel: user.accessLevel
+          accessLevel: user.accessLevel,
+          refreshToken: this._jwtService.sign({
+            userId: user._id,
+            accessLevel: user.accessLevel,
+          })
         };
-        // return this._authenticationSecurityService.generateJwtResponse(payload)
-        return {
-          ...payload,
-          ...{ accessToken: this._jwtService.sign(payload) },
-        };
+        return this._authenticationSecurityService.generateJwtResponse(payload)
+        // return {
+        //   ...payload,
+        //   ...{ accessToken: this._jwtService.sign(payload) },
+        // };
       })
       .catch((error) => {
         throw new UnauthorizedException(

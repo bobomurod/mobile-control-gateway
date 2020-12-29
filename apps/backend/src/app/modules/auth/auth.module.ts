@@ -6,6 +6,7 @@ import {AuthController} from './auth.controller';
 import {JwtModule} from '@nestjs/jwt';
 import {UserModule} from '../users/user.module';
 import {AuthenticationSecurityService} from "@mobile-control-gateway/backend/authentication/services";
+import {environment} from "../../../environments/environment";
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import {AuthenticationSecurityService} from "@mobile-control-gateway/backend/aut
     UserModule,
     PassportModule,
     JwtModule.register({
-      secret: process.env.SECRET,
+      secret: environment.authenticationConfig.SECRET,
     }),
   ],
   providers: [AuthService, AuthenticationSecurityService],

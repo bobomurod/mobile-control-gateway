@@ -14,7 +14,7 @@ export class UserAuthJwtResponseDto {
   @IsString()
   accessToken: string;
 
-  // @IsNotEmpty()
-  // @IsString()
-  // refreshToken: string;
+  @IsNotEmpty()
+  @IsString()
+  refreshToken: string;
 }

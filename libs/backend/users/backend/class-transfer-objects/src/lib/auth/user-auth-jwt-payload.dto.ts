@@ -9,4 +9,7 @@ export class UserAuthJwtPayloadDto {
   @IsNotEmpty()
   @IsEnum(UserAccessLevelEnum)
   accessLevel: UserAccessLevelEnum;
+
+  @IsString()
+  refreshToken: string;
 }

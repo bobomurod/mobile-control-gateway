@@ -1,5 +1,6 @@
-import {Injectable} from '@nestjs/common';
-import * as bcryptjs from 'bcryptjs';
+// use 'strict';
+import {Injectable, Logger} from '@nestjs/common';
+import * as bcryptjs from 'bcrypt';
 import {
   UserAuthJwtPayloadDto,
   UserAuthJwtResponseDto
@@ -9,6 +10,7 @@ import {ConfigService} from "@nestjs/config";
 
 @Injectable()
 export class AuthenticationSecurityService {
+  private readonly _logger: Logger = new Logger('auth security service')
   private readonly _accessTokenTTL: number;
   private readonly _refreshTokenTTL: number;
 
@@ -25,7 +27,9 @@ export class AuthenticationSecurityService {
     rawPassword: string,
     encryptedPassword: string,
   ): Promise<boolean> {
-    return await bcryptjs.compare(rawPassword, encryptedPassword);
+    const result = await bcryptjs.compare(rawPassword, encryptedPassword)
+    this._logger.log(result)
+    return result
   }
 
   async generateJwtResponse(payload: UserAuthJwtPayloadDto): Promise<UserAuthJwtResponseDto> {
@@ -36,10 +40,10 @@ export class AuthenticationSecurityService {
         {...payload, ...{tokenType: 'accessToken'}},
         {expiresIn: this._accessTokenTTL},
       ),
-      // refreshToken: await this._jwtService.signAsync(
-      //   { ...payload, ...{ tokenType: 'refreshToken' } },
-      //   { expiresIn: this._refreshTokenTTL },
-      // ),
+      refreshToken: await this._jwtService.signAsync(
+        { ...payload, ...{ tokenType: 'refreshToken' } },
+        { expiresIn: this._refreshTokenTTL },
+      ),
     };
   }
 
