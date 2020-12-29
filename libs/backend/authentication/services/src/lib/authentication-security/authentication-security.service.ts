@@ -40,10 +40,10 @@ export class AuthenticationSecurityService {
         {...payload, ...{tokenType: 'accessToken'}},
         {expiresIn: this._accessTokenTTL},
       ),
-      // refreshToken: await this._jwtService.signAsync(
-      //   { ...payload, ...{ tokenType: 'refreshToken' } },
-      //   { expiresIn: this._refreshTokenTTL },
-      // ),
+      refreshToken: await this._jwtService.signAsync(
+        { ...payload, ...{ tokenType: 'refreshToken' } },
+        { expiresIn: this._refreshTokenTTL },
+      ),
     };
   }
 

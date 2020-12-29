@@ -45,7 +45,7 @@ export class UserService {
       .findByIdAndUpdate(userId, data, { new: true })
       .exec()
       .then((user) => user.toObject())
-      .catch((error) => {
+      .catch(() => {
         throw new InternalServerErrorException();
       });
   }

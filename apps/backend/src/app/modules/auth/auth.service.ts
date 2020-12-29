@@ -38,8 +38,8 @@ export class AuthService {
     const _user: UserDto = await this._userService
       .getSingle(_userWhere)
       .then((user) => user)
-      .catch((errr) => {
-        throw new UnauthorizedException('Invalid username or password'+errr);
+      .catch(() => {
+        throw new UnauthorizedException('Invalid username or password');
       });
     return this._authenticationSecurityService
       .checkPassword(data.password, _user.password)
@@ -50,6 +50,10 @@ export class AuthService {
         const payload: UserAuthJwtPayloadDto = {
           userId: _user._id,
           accessLevel: _user.accessLevel,
+          refreshToken: this._jwtService.sign({
+            userId: _user._id,
+            accessLevel: _user.accessLevel,
+          })
         };
         const res =  {
           ...payload,
@@ -64,7 +68,7 @@ export class AuthService {
           throw new UnauthorizedException('Invalid username or password');
         }
         this._logger.error(error);
-        throw new InternalServerErrorException('123123');
+        throw new InternalServerErrorException();
       });
   }
 
@@ -75,13 +79,17 @@ export class AuthService {
       .then((user) => {
         const payload: UserAuthJwtPayloadDto = {
           userId: user._id,
-          accessLevel: user.accessLevel
+          accessLevel: user.accessLevel,
+          refreshToken: this._jwtService.sign({
+            userId: user._id,
+            accessLevel: user.accessLevel,
+          })
         };
-        // return this._authenticationSecurityService.generateJwtResponse(payload)
-        return {
-          ...payload,
-          ...{ accessToken: this._jwtService.sign(payload) },
-        };
+        return this._authenticationSecurityService.generateJwtResponse(payload)
+        // return {
+        //   ...payload,
+        //   ...{ accessToken: this._jwtService.sign(payload) },
+        // };
       })
       .catch((error) => {
         throw new UnauthorizedException(
