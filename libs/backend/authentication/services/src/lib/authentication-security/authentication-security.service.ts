@@ -23,24 +23,6 @@ export class AuthenticationSecurityService {
   async encryptPassword(rawPassword: string): Promise<string> {
     return await bcryptjs.hash(rawPassword, 10);
   }
-  // async encryptPassword(rawPassword: string): Promise<string> {
-  //   return rawPassword;
-  // }
-
-
-  // async checkPassword(
-  //   rawPassword: string,
-  //   encryptedPassword: string,
-  // ): Promise<boolean> {
-  //   console.log(rawPassword)
-  //   console.log(encryptedPassword)
-  //   return rawPassword === encryptedPassword;
-  //   // if (rawPassword === encryptedPassword){
-  //   //   return true
-  //   // } else {
-  //   //   return false
-  //   // }
-  // }
 
   async checkPassword(
     rawPassword: string,
@@ -50,18 +32,6 @@ export class AuthenticationSecurityService {
     this._logger.log(result)
     return result
   }
-
-  // async checkPassword(rawPassword,encryptedPassword): Promise<boolean> {
-  //   return new Promise(function (resolve, reject) {
-  //     bcryptjs.compare(rawPassword,encryptedPassword, function (err, res) {
-  //       if (err) {
-  //         reject(err)
-  //       } else {
-  //         resolve(res)
-  //       }
-  //     })
-  //   })
-  // }
 
   async generateJwtResponse(payload: UserAuthJwtPayloadDto): Promise<UserAuthJwtResponseDto> {
     return {
