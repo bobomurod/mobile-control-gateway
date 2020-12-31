@@ -5,7 +5,7 @@ import {PassportModule} from '@nestjs/passport';
 import {AuthController} from './auth.controller';
 import {JwtModule} from '@nestjs/jwt';
 import {UserModule} from '../users/user.module';
-import {AuthenticationSecurityService} from "@mobile-control-gateway/backend/authentication/services";
+import {AuthenticationSecurityService, JwtStrategy} from "@mobile-control-gateway/backend/authentication/services";
 import {environment} from "../../../environments/environment";
 
 @Module({
@@ -17,7 +17,7 @@ import {environment} from "../../../environments/environment";
       secret: environment.authenticationConfig.SECRET,
     }),
   ],
-  providers: [AuthService, AuthenticationSecurityService],
+  providers: [AuthService, AuthenticationSecurityService, JwtStrategy],
   controllers: [AuthController],
 })
 export class AuthModule {}
