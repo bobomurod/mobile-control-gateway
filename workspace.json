@@ -284,6 +284,31 @@
           }
         }
       }
+    },
+    "backend-users-services": {
+      "root": "libs/backend/users/services",
+      "sourceRoot": "libs/backend/users/services/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/backend/users/services/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/backend/users/services"
+          ],
+          "options": {
+            "jestConfig": "libs/backend/users/services/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {

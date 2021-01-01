@@ -41,6 +41,9 @@
       ],
       "@mobile-control-gateway/backend/authentication/services": [
         "libs/backend/authentication/services/src/index.ts"
+      ],
+      "@mobile-control-gateway/backend/users/services": [
+        "libs/backend/users/services/src/index.ts"
       ]
     }
   },

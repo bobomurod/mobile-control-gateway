@@ -10,5 +10,6 @@ module.exports = {
     '<rootDir>/libs/backend/users/backend/decorators',
     '<rootDir>/libs/backend/users/backend/interceptors',
     '<rootDir>/libs/backend/authentication/backend',
+    '<rootDir>/libs/backend/users/services',
   ],
 };

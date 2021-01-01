@@ -1,4 +1,4 @@
-import {Body, Controller, Post} from '@nestjs/common';
+import {Body, Controller, Get, Post} from '@nestjs/common';
 import {AuthService} from './auth.service';
 import {
   UserAuthJwtResponseDto,
@@ -13,7 +13,6 @@ export class AuthController {
   @Post('login')
   async login(@Body() body: UserAuthLoginDto): Promise<UserAuthJwtResponseDto> {
     return this._authService.login(body);
-    // return true;
   }
 
   @Post('registration')
