@@ -30,6 +30,7 @@ export class UserController {
   guarded() {
     return 'secured'
   }
+
   @Get('activate')
   async sendActivationCode(activationCode: number): Promise<string> {
     return 'code sendedd'

@@ -86,10 +86,7 @@ export class AuthService {
           })
         };
         return this._authenticationSecurityService.generateJwtResponse(payload)
-        // return {
-        //   ...payload,
-        //   ...{ accessToken: this._jwtService.sign(payload) },
-        // };
+
       })
       .catch((error) => {
         throw new UnauthorizedException(
