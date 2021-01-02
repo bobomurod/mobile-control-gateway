@@ -52,6 +52,9 @@
     },
     "backend-authentication-services": {
       "tags": []
+    },
+    "backend-users-services": {
+      "tags": []
     }
   }
 }
