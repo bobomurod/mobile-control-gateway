@@ -11,10 +11,12 @@ import {UserCollection} from "@mobile-control-gateway/backend/users/backend/sche
 @Injectable()
 export class UserService {
   private readonly _logger: Logger = new Logger('userService')
+
   constructor(
     @InjectModel(UserCollection.name)
     private readonly _userModel: Model<UserCollection>,
-  ) {}
+  ) {
+  }
 
   async createSingle(data: UserCreateDto): Promise<UserDto> {
     this._logger.log(data)
@@ -26,6 +28,7 @@ export class UserService {
         throw new InternalServerErrorException(error);
       });
   }
+
   async updateSingle(userId: string, data: UserUpdateDto): Promise<UserDto> {
     await this._userModel
       .findById(userId)
@@ -42,13 +45,14 @@ export class UserService {
         throw new InternalServerErrorException();
       });
     return await this._userModel
-      .findByIdAndUpdate(userId, data, { new: true })
+      .findByIdAndUpdate(userId, data, {new: true})
       .exec()
       .then((user) => user.toObject())
       .catch(() => {
         throw new InternalServerErrorException();
       });
   }
+
   async getSingle(where: UserWhereDto): Promise<UserDto> {
     this._logger.log(where)
     return await this._userModel
@@ -67,6 +71,7 @@ export class UserService {
         throw new InternalServerErrorException();
       });
   }
+
   async getMany(where: UserWhereDto): Promise<UserDto[]> {
     return await this._userModel
       .find(where)
@@ -84,6 +89,7 @@ export class UserService {
         throw new InternalServerErrorException();
       });
   }
+
   async deleteSingle(where: UserWhereDto): Promise<UserDto> {
     return await this._userModel
       .findOneAndRemove(where)

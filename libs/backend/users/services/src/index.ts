@@ -1,1 +1,1 @@
-export * from './lib/activation-code-service/activation-code.service';
+export * from './lib/user-activation-service/user-activation.service';

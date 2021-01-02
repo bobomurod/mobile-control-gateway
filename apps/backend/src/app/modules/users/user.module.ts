@@ -3,6 +3,7 @@ import {UserService} from './user.service';
 import {UserController} from './user.controller';
 import {MongooseModule} from "@nestjs/mongoose";
 import {UserCollection, UserSchema} from "@mobile-control-gateway/backend/users/backend/schemas";
+import {UserActivationService} from "@mobile-control-gateway/backend/users/services";
 
 
 @Module({
@@ -10,7 +11,7 @@ import {UserCollection, UserSchema} from "@mobile-control-gateway/backend/users/
     { name: UserCollection.name, schema: UserSchema },
   ]),],
   controllers: [UserController],
-  providers: [UserService],
+  providers: [UserService, UserActivationService],
   exports: [UserService],
 })
 export class UserModule {}

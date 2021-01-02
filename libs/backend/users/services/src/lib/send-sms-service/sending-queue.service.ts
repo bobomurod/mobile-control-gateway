@@ -1,6 +1,6 @@
 export class SendingQueueService {
   async postMessage() {
     //queue message
-    return
+    return //true if message success queued
   }
 }
