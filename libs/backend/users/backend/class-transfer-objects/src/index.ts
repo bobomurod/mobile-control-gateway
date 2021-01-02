@@ -6,4 +6,4 @@ export * from './lib/user/user.dto';
 export * from './lib/user/user-create.dto';
 export * from './lib/user/user-update.dto';
 export * from './lib/user/user-where.dto';
-
+export * from './lib/user/user-code.dto';
