@@ -1,9 +1,15 @@
+import {SendingQueueService} from "./sending-queue.service";
+import {Injectable} from "@nestjs/common";
+
+@Injectable()
 export class SendSmsService {
-    sendActivationCode(code: number) {
-      //generate sms text with code and post it to queue
+    constructor(private readonly _sendingQueueService: SendingQueueService) {
+    }
+    async sendActivationCode(code: number) {
+      await this._sendingQueueService.postMessage(this._performActivationMessage(code))
     }
 
-    private _performMessage(code: number) {
+    private _performActivationMessage(code: number) {
       return `Vash secretny kod ${code}.`;
     }
 }

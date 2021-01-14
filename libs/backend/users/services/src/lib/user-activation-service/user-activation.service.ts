@@ -1,24 +1,35 @@
 import {UserService} from "../../../../../../../apps/backend/src/app/modules/users/user.service";
 import {UserDto, UserWhereDto} from "@mobile-control-gateway/backend/users/backend/class-transfer-objects";
+import {UserCodeDto} from "@mobile-control-gateway/backend/users/backend/class-transfer-objects";
+import {SendSmsService} from "../send-sms-service/send-sms.service";
+import {Injectable} from "@nestjs/common";
 
-
+@Injectable()
 export class UserActivationService {
   constructor(
-    private readonly _userService: UserService
+    private readonly _userService: UserService,
+    private readonly _sendSmsService: SendSmsService
   ) {
   }
-  async generateActivationCode(): Promise<number> {
+  async performActivationCode(id): Promise<any> {
     /*
     1. Generate the code
     2. Save code to use document in db
     3. Return the code
      */
-    return 333333
+    const activationCode:number = this._getRandomNumberBetween(1000, 9999);
+    try {
+      await this._userService.updateSingle(id, {approveCode: activationCode});
+      await this._sendSmsService.sendActivationCode(activationCode)
+    } catch (e) {
+      return 'error'+e
+    }
+    return activationCode
   }
 
-  async checkActivationCode(userCode: number, user: UserWhereDto): Promise<boolean> {
-    const userFromDb = await this._userService.getSingle(user)
-    if (userFromDb.approveCode === userCode)
+  async checkActivationCode(activationData: UserCodeDto): Promise<boolean> {
+    const userFromDb = await this._userService.getSingle({_id: activationData._id})
+    if (userFromDb.approveCode === activationData.activationCode)
     {
       await this._activate(userFromDb._id)
       return true
@@ -27,8 +38,12 @@ export class UserActivationService {
   }
 
   private async _activate(userId: string): Promise<UserDto> {
-    let data: UserWhereDto
+    const data: UserWhereDto = {}
     data.isActive = true
     return await this._userService.updateSingle(userId, data);
+  }
+
+  private _getRandomNumberBetween(min,max){
+    return Math.floor(Math.random()*(max-min+1)+min);
   }
 }
