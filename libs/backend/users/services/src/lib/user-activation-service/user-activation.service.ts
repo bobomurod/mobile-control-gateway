@@ -38,7 +38,7 @@ export class UserActivationService {
   }
 
   private async _activate(userId: string): Promise<UserDto> {
-    let data: UserWhereDto
+    const data: UserWhereDto = {}
     data.isActive = true
     return await this._userService.updateSingle(userId, data);
   }
