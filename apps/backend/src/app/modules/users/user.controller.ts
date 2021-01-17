@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Param, Patch, Post, UseGuards} from '@nestjs/common';
+import {Body, Controller, Get, InternalServerErrorException, Param, Patch, Post, UseGuards} from '@nestjs/common';
 import {UserService} from './user.service';
 import {UserDto, UserUpdateDto} from "@mobile-control-gateway/backend/users/backend/class-transfer-objects";
 import {JwtAuthGuard} from "@mobile-control-gateway/backend/authentication/services";
@@ -36,9 +36,12 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Post('activate/:id')
-  async sendActivationCode(@Param('id') id: string): Promise<any> {
+  async sendActivationCode(@Param('id') id: string): Promise<number> {
     return await this._userActivationService.performActivationCode(id)
-    // return `code sendedd ${id}`
+      // .then(number => number)
+      // .catch((error) => {
+      //   throw new InternalServerErrorException()
+      // })
   }
 
   @UseGuards(JwtAuthGuard)

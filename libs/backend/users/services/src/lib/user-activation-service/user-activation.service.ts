@@ -2,7 +2,7 @@ import {UserService} from "../../../../../../../apps/backend/src/app/modules/use
 import {UserDto, UserWhereDto} from "@mobile-control-gateway/backend/users/backend/class-transfer-objects";
 import {UserCodeDto} from "@mobile-control-gateway/backend/users/backend/class-transfer-objects";
 import {SendSmsService} from "../send-sms-service/send-sms.service";
-import {Injectable, Logger} from "@nestjs/common";
+import {Injectable, InternalServerErrorException, Logger, MethodNotAllowedException} from "@nestjs/common";
 
 @Injectable()
 export class UserActivationService {
@@ -13,7 +13,7 @@ export class UserActivationService {
     private readonly _sendSmsService: SendSmsService
   ) {
   }
-  async performActivationCode(id): Promise<any> {
+  async performActivationCode(id): Promise<number> {
     /*
     1. Generate the code
     2. Save code to use document in db
@@ -21,10 +21,15 @@ export class UserActivationService {
      */
     const activationCode:number = this._getRandomNumberBetween(1000, 9999);
     try {
+      await this._userService.getSingle({_id: id}).then((user) => {
+        if (user.isApproved)
+          throw new MethodNotAllowedException()
+      })
       await this._userService.updateSingle(id, {approveCode: activationCode});
       await this._sendSmsService.sendActivationCode(activationCode)
     } catch (e) {
-      return 'error'+e
+      this._logger.log(e)
+      throw new Error(e)
     }
     return activationCode
   }
